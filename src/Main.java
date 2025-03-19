@@ -24,9 +24,37 @@ Dla każdej z liczb z 2 wiersza rozstrzygnij czy da się ją przedstawić jako i
 
  */
 
-
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Map;
+import java.util.HashMap;
 
 public class Main {
+    public static String readFile(String path) {
+        try {
+            return Files.readString(Paths.get(path));
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "Error!";
+        }
+    }
+    public static ArrayList<Integer> getContents(int x) {
+        String file_content = readFile("./dane/liczby_przyklad.txt");
+
+        String[] lines = file_content.split("\n");
+
+        int[] line = Arrays.stream(lines[x].trim().split(" ")).mapToInt(Integer::parseInt).toArray();
+        ArrayList<Integer> list = new ArrayList<>();
+
+        for (int n : line)
+            list.add(n);
+
+        return list;
+    }
     public static void main(String[] args) {
         zadanie41();
         zadanie42();
@@ -35,10 +63,31 @@ public class Main {
     }
     public static void zadanie41() {
 
+        int n = 0;
 
+        ArrayList<Integer> list_1 = getContents(0);
+        ArrayList<Integer> list_2 = getContents(1);
+
+        for (int s_a : list_1) {
+            for (int s_b: list_2) {
+                if (s_b % s_a == 0) {
+                    n++;
+                    break;
+                }
+            }
+        }
+
+        System.out.println("Zadanie 1\n" + n);
 
     }
     public static void zadanie42() {
+
+        ArrayList<Integer> list_1 = getContents(0);
+
+        Collections.sort(list_1);
+        Collections.reverse(list_1);
+
+        System.out.println("Zadanie 2\n" + list_1.get(102));
 
     }
     public static void zadanie43() {
